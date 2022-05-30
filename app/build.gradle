@@ -57,7 +57,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
 
-    //implementation 'com.github.delight-im:Android-SimpleLocation:v1.0.1'
+    implementation 'com.github.delight-im:Android-SimpleLocation:v1.1.0'
 
 
     implementation "io.reactivex.rxjava2:rxjava:2.1.1"
