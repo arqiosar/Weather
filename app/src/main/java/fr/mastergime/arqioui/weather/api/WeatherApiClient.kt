@@ -21,7 +21,7 @@ object WeatherApiClient {
 
     private fun getOkHttpClient(): OkHttpClient {
         val client = OkHttpClient.Builder()
-        //client.addInterceptor(RequestInterceptor())
+        client.addInterceptor(RequestInterceptor())
         client.addInterceptor(NetworkConnectionInterceptor())
         return client.build()
     }
