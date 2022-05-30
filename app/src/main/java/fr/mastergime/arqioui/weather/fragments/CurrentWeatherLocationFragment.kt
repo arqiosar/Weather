@@ -62,6 +62,7 @@ class CurrentWeatherLocationFragment : Fragment(), LocationListener {
             locationGps?.let {
                 _LWBinding.lytLocation.visibility = View.VISIBLE
                 _LWBinding.tvState.text = locationGps.sys?.country.toString()
+                _LWBinding.tvCityName.text = locationGps.name.toString()
                 _LWBinding.tvTemperature.text = locationGps.main!!.temp.toInt().toString()
                 _LWBinding.tvHumidity.text = locationGps.main!!.humidity.toString()
                 _LWBinding.tvPressure.text = locationGps.main!!.pressure.toString()
