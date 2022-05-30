@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
+import com.bumptech.glide.Glide
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
@@ -31,12 +32,13 @@ import fr.mastergime.arqioui.weather.databinding.FragmentLocationWeatherBinding
 import fr.mastergime.arqioui.weather.factory.LocationWeatherFactory
 import fr.mastergime.arqioui.weather.models.WeatherViewModel
 import fr.mastergime.arqioui.weather.repository.RequestRepository
+import fr.mastergime.arqioui.weather.util.Constants
+import fr.mastergime.arqioui.weather.util.dateConverter
+import fr.mastergime.arqioui.weather.util.timeConverter
 
 
 class LocationWeatherFragment : Fragment(), LocationListener {
 
-    private lateinit var locationManager: LocationManager
-    private val locationPermissionCode = 2
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     private val LWViewModel: WeatherViewModel by viewModels(factoryProducer = {
@@ -65,23 +67,22 @@ class LocationWeatherFragment : Fragment(), LocationListener {
         getLocation()
         Toast.makeText(this.context, "$longitude", Toast.LENGTH_SHORT).show()
 
-        //LWViewModel.getWeatherDataWithGPS(latitude!!, longitude!!, Constants.METRIC)
-
         LWViewModel.locationData.observe(viewLifecycleOwner, Observer { locationGps ->
             locationGps?.let {
                 _LWBinding.lytLocation.visibility = View.VISIBLE
                 //_LWBinding.locationGPS = locationGps
                 _LWBinding.tvTemperature.text = locationGps.main!!.temp.toInt().toString()
-                //_LWBinding.tvDate.text = dateConverter()
-                //_LWBinding.tvSunrise.text = timeConverter((locationGps.sys!!.sunrise).toLong())
-                //_LWBinding.tvSunset.text = timeConverter((locationGps.sys!!.sunset).toLong())
-                _LWBinding.imgState.setImageResource(
-                    resources.getIdentifier(
-                        "ic_" + locationGps.weather?.get(
-                            0
-                        )?.icon, "drawable", view.context.packageName
-                    )
-                )
+                _LWBinding.tvHumidity.text = locationGps.main!!.humidity.toString()
+                _LWBinding.tvPressure.text = locationGps.main!!.pressure.toString()
+                _LWBinding.tvWind.text = locationGps.wind?.speed.toString()
+                _LWBinding.tvVisibility.text = locationGps.visibility.toString()
+                _LWBinding.tvDate.text = dateConverter()
+                _LWBinding.tvSunrise.text = timeConverter((locationGps.sys!!.sunrise).toLong())
+                _LWBinding.tvSunset.text = timeConverter((locationGps.sys!!.sunset).toLong())
+
+                Glide.with(this)
+                    .load("https://openweathermap.org/img/wn/" + (locationGps.weather?.get(0)?.icon!!) + "@2x.png")
+                    .into(_LWBinding.imgState)
 
             }
         })
@@ -89,10 +90,10 @@ class LocationWeatherFragment : Fragment(), LocationListener {
         LWViewModel.locationLoading.observe(viewLifecycleOwner, Observer { loading ->
             loading?.let {
                 if (it) {
-                    //locationLoading.visibility = View.VISIBLE
-                    //lytLocation.visibility = View.GONE
+                    _LWBinding.locationLoading.visibility = View.VISIBLE
+                    _LWBinding.lytLocation.visibility = View.GONE
                 } else {
-                    //locationLoading.visibility = View.GONE
+                    _LWBinding.locationLoading.visibility = View.GONE
                 }
             }
         })
@@ -104,12 +105,12 @@ class LocationWeatherFragment : Fragment(), LocationListener {
                 if(this.context?.let {
                         ActivityCompat.checkSelfPermission(
                             it,
-                            android.Manifest.permission.ACCESS_FINE_LOCATION)
+                            Manifest.permission.ACCESS_FINE_LOCATION)
                     }
                  != PackageManager.PERMISSION_GRANTED && this.context?.let {
                         ActivityCompat.checkSelfPermission(
                             it,
-                            android.Manifest.permission.ACCESS_COARSE_LOCATION
+                            Manifest.permission.ACCESS_COARSE_LOCATION
                         )
                     } != PackageManager.PERMISSION_GRANTED)
                 {
@@ -124,6 +125,9 @@ class LocationWeatherFragment : Fragment(), LocationListener {
                             Toast.makeText(context, "Null Recieved", Toast.LENGTH_SHORT).show()
                         } else {
                             Toast.makeText(context, "Get Success", Toast.LENGTH_SHORT).show()
+
+                            Toast.makeText(context, "${location.longitude}", Toast.LENGTH_SHORT).show()
+                            LWViewModel.getWeatherDataWithGPS(location.latitude.toString(), location.longitude.toString(), Constants.METRIC)
                             latitude = location.latitude.toString()
                             longitude = location.longitude.toString()
 
@@ -158,11 +162,11 @@ class LocationWeatherFragment : Fragment(), LocationListener {
         if(this.context?.let {
                 ActivityCompat.checkSelfPermission(
                     it,
-                    android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                    Manifest.permission.ACCESS_COARSE_LOCATION)
             }
         == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                 this.requireContext(),
-            android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             return true
         }
         return false
@@ -171,8 +175,8 @@ class LocationWeatherFragment : Fragment(), LocationListener {
     private fun requestPermission(){
         this.activity?.let {
             ActivityCompat.requestPermissions(
-                it, arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                android.Manifest.permission.ACCESS_FINE_LOCATION),
+                it, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION),
                 PERMISSION_REQUEST_ACCESS_LOCATION
             )
         }
