@@ -53,8 +53,9 @@ class LocationWeatherFragment : Fragment(), LocationListener {
         super.onViewCreated(view, savedInstanceState)
 
         getLocation()
+        Toast.makeText(this.context, "$longitude", Toast.LENGTH_SHORT).show()
 
-        LWViewModel.getWeatherDataWithGPS(latitude!!, longitude!!, Constants.METRIC)
+        //LWViewModel.getWeatherDataWithGPS(latitude!!, longitude!!, Constants.METRIC)
 
         LWViewModel.locationData.observe(viewLifecycleOwner, Observer { locationGps ->
             locationGps?.let {
