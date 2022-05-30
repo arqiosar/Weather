@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import fr.mastergime.arqioui.weather.databinding.ActivityMainBinding
-import fr.mastergime.arqioui.weather.fragments.LocationWeatherFragment
+import fr.mastergime.arqioui.weather.fragments.CurrentWeatherLocationFragment
 import fr.mastergime.arqioui.weather.fragments.SearchCityWeatherFragment
 
 
@@ -19,11 +19,11 @@ class MainActivity : AppCompatActivity() {
         val binding: ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        loadFragment(LocationWeatherFragment())
+        loadFragment(CurrentWeatherLocationFragment())
         binding.bottomNavigationView.setOnItemReselectedListener {
             when (it.itemId) {
                 R.id.current_weather -> {
-                    loadFragment(LocationWeatherFragment())
+                    loadFragment(CurrentWeatherLocationFragment())
                 }
                 R.id.search_city -> {
                     loadFragment(SearchCityWeatherFragment())

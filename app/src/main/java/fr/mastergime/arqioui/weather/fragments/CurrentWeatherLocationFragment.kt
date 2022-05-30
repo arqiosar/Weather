@@ -1,48 +1,39 @@
 package fr.mastergime.arqioui.weather.fragments
 
 import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.IntentSender.SendIntentException
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import android.os.Build
 import android.os.Bundle
-import android.os.Looper
 import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import com.bumptech.glide.Glide
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
-import com.google.android.gms.tasks.OnCompleteListener
 import fr.mastergime.arqioui.weather.databinding.FragmentLocationWeatherBinding
-import fr.mastergime.arqioui.weather.factory.LocationWeatherFactory
-import fr.mastergime.arqioui.weather.models.WeatherViewModel
+import fr.mastergime.arqioui.weather.factory.CurrentLocationWeatherFactory
+import fr.mastergime.arqioui.weather.models.CurrentLocationWeatherViewModel
 import fr.mastergime.arqioui.weather.repository.RequestRepository
 import fr.mastergime.arqioui.weather.util.Constants
 import fr.mastergime.arqioui.weather.util.dateConverter
 import fr.mastergime.arqioui.weather.util.timeConverter
 
 
-class LocationWeatherFragment : Fragment(), LocationListener {
+class CurrentWeatherLocationFragment : Fragment(), LocationListener {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
-    private val LWViewModel: WeatherViewModel by viewModels(factoryProducer = {
-        LocationWeatherFactory(
+    private val LWViewModel: CurrentLocationWeatherViewModel by viewModels(factoryProducer = {
+        CurrentLocationWeatherFactory(
             RequestRepository()
         )
     })
@@ -70,7 +61,7 @@ class LocationWeatherFragment : Fragment(), LocationListener {
         LWViewModel.locationData.observe(viewLifecycleOwner, Observer { locationGps ->
             locationGps?.let {
                 _LWBinding.lytLocation.visibility = View.VISIBLE
-                //_LWBinding.locationGPS = locationGps
+                _LWBinding.tvState.text = locationGps.sys?.country.toString()
                 _LWBinding.tvTemperature.text = locationGps.main!!.temp.toInt().toString()
                 _LWBinding.tvHumidity.text = locationGps.main!!.humidity.toString()
                 _LWBinding.tvPressure.text = locationGps.main!!.pressure.toString()

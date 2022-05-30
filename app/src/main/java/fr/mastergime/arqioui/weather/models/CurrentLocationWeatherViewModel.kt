@@ -9,7 +9,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 
-class WeatherViewModel(private val repository: RequestRepository) : ViewModel(){
+class CurrentLocationWeatherViewModel(private val repository: RequestRepository) : ViewModel(){
 
     private val disposable = CompositeDisposable()
 

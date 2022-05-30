@@ -9,24 +9,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.adapters.Converters
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
-import fr.mastergime.arqioui.weather.R
 import fr.mastergime.arqioui.weather.databinding.FragmentSearchCityWeatherBinding
 import fr.mastergime.arqioui.weather.factory.SearchCityWeatherFactory
-import fr.mastergime.arqioui.weather.models.SearchWeatherByCityViewModel
+import fr.mastergime.arqioui.weather.models.SearchCityWeatherViewModel
 import fr.mastergime.arqioui.weather.repository.RequestRepository
 import fr.mastergime.arqioui.weather.util.dateConverter
 import fr.mastergime.arqioui.weather.util.timeConverter
-import java.text.SimpleDateFormat
-import java.util.*
 
 class SearchCityWeatherFragment : Fragment() {
 
-    private val SWCViewModel: SearchWeatherByCityViewModel by viewModels(factoryProducer = {
+    private val SWCViewModel: SearchCityWeatherViewModel by viewModels(factoryProducer = {
         SearchCityWeatherFactory(
             RequestRepository()
         )
