@@ -11,7 +11,6 @@ import fr.mastergime.arqioui.weather.fragments.SearchCityWeatherFragment
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var bottomNav : BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
 

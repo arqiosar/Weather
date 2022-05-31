@@ -4,11 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/dark_blue">
 
-    <!-- <data>
-        <variable
-            name="locationGPS"
-            type="com.ismailhakkiaydin.weather.model.responses.WeatherResponse" />
-    </data> -->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,7 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/dark_blue">
-            <!-- layoutBackgroundImage="@{locationGPS.weather.get(0).icon}" -->
 
             <View
                 android:id="@+id/locationBacgroundView"
@@ -65,7 +59,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"/>
-                    <!-- android:text="@{String.valueOf(locationGPS.main.pressure)}" -->
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -108,7 +101,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp" />
-                    <!-- android:text="@{String.valueOf(locationGPS.wind.speed)}" -->
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -192,7 +184,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp" />
-                    <!-- android:text="@{String.valueOf(locationGPS.main.humidity)}"  -->
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -235,7 +226,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp" />
-                    <!-- android:text="@{String.valueOf(locationGPS.visibility)}" -->
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -319,7 +309,6 @@
                 app:layout_constraintEnd_toEndOf="@+id/tvTemperature"
                 app:layout_constraintHorizontal_bias="0.516"
                 app:layout_constraintStart_toStartOf="@+id/tvTemperature" />
-            <!-- android:text="@{locationGPS.weather.get(0).description}" -->
 
 
             <ImageView
@@ -348,7 +337,6 @@
                 app:layout_constraintEnd_toEndOf="@+id/tvDate"
                 app:layout_constraintStart_toStartOf="@+id/tvDate"
                 app:layout_constraintTop_toBottomOf="@+id/tvDate" />
-            <!-- android:text="@{locationGPS.name}" -->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
