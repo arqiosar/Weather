@@ -16,6 +16,7 @@ import fr.mastergime.arqioui.weather.databinding.FragmentSearchCityWeatherBindin
 import fr.mastergime.arqioui.weather.factory.SearchCityWeatherFactory
 import fr.mastergime.arqioui.weather.models.SearchCityWeatherViewModel
 import fr.mastergime.arqioui.weather.repository.RequestRepository
+import fr.mastergime.arqioui.weather.util.Constants
 import fr.mastergime.arqioui.weather.util.dateConverter
 import fr.mastergime.arqioui.weather.util.timeConverter
 
@@ -51,7 +52,7 @@ class SearchCityWeatherFragment : Fragment() {
 
         var cName = GET.getString("cityName", "nice")?.toLowerCase()
         _SWCBinding.edtCityName.setText(cName)
-        SWCViewModel.refreshData(cName!!)
+        SWCViewModel.refreshData(cName!!, Constants.METRIC, Constants.API_KEY)
 
         getLiveData()
 
@@ -61,7 +62,7 @@ class SearchCityWeatherFragment : Fragment() {
 
             var cityName = GET.getString("cityName", cName)?.toLowerCase()
             _SWCBinding.edtCityName.setText(cityName)
-            SWCViewModel.refreshData(cityName!!)
+            SWCViewModel.refreshData(cityName!!, Constants.METRIC, Constants.API_KEY)
             _SWCBinding.swipeRefreshLayout.isRefreshing = false
         }
 
@@ -69,7 +70,7 @@ class SearchCityWeatherFragment : Fragment() {
             val cityName = _SWCBinding.edtCityName.text.toString()
             SET.putString("cityName", cityName)
             SET.apply()
-            SWCViewModel.refreshData(cityName)
+            SWCViewModel.refreshData(cityName, Constants.METRIC, Constants.API_KEY)
             getLiveData()
             Log.i(TAG, "onCreate: $cityName")
         }

@@ -14,7 +14,11 @@ class RequestRepository {
         return WeatherApiClient.api.getWeatherByGPS(latitude, longitude, units)
     }
 
-    fun getDataService(cityName: String): Single<WeatherResponse> {
-        return WeatherApiClient.api.getData(cityName)
+    fun getDataService(
+        cityName: String,
+        units: String,
+        APPID: String
+        ): Single<WeatherResponse> {
+        return WeatherApiClient.api.getData(cityName, units, APPID)
     }
 }

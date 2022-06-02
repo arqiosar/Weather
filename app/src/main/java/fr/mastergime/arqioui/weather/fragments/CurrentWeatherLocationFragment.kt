@@ -40,7 +40,7 @@ class CurrentWeatherLocationFragment : Fragment(), LocationListener {
     private lateinit var _LWBinding: FragmentLocationWeatherBinding
 
     private var latitude: String? = null
-    private var longitude: String? = null
+    private var longitude: String?= null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -99,7 +99,7 @@ class CurrentWeatherLocationFragment : Fragment(), LocationListener {
                             it,
                             Manifest.permission.ACCESS_FINE_LOCATION)
                     }
-                 != PackageManager.PERMISSION_GRANTED && this.context?.let {
+                    != PackageManager.PERMISSION_GRANTED && this.context?.let {
                         ActivityCompat.checkSelfPermission(
                             it,
                             Manifest.permission.ACCESS_COARSE_LOCATION
@@ -117,11 +117,10 @@ class CurrentWeatherLocationFragment : Fragment(), LocationListener {
                             Toast.makeText(context, "Null Recieved", Toast.LENGTH_SHORT).show()
                         } else {
                             Toast.makeText(context, "Get Success", Toast.LENGTH_SHORT).show()
-
                             Toast.makeText(context, "${location.longitude}", Toast.LENGTH_SHORT).show()
-                            LWViewModel.getWeatherDataWithGPS(location.latitude.toString(), location.longitude.toString(), Constants.METRIC)
                             latitude = location.latitude.toString()
                             longitude = location.longitude.toString()
+                            LWViewModel.getWeatherDataWithGPS(latitude.toString(), longitude.toString(), Constants.METRIC)
 
                         }
 
@@ -156,7 +155,7 @@ class CurrentWeatherLocationFragment : Fragment(), LocationListener {
                     it,
                     Manifest.permission.ACCESS_COARSE_LOCATION)
             }
-        == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+            == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                 this.requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             return true
@@ -168,7 +167,7 @@ class CurrentWeatherLocationFragment : Fragment(), LocationListener {
         this.activity?.let {
             ActivityCompat.requestPermissions(
                 it, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION),
+                    Manifest.permission.ACCESS_FINE_LOCATION),
                 PERMISSION_REQUEST_ACCESS_LOCATION
             )
         }
@@ -197,6 +196,5 @@ class CurrentWeatherLocationFragment : Fragment(), LocationListener {
         TODO("Not yet implemented")
     }
 }
-
 
 

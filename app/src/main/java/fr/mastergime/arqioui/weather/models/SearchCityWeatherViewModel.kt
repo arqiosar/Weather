@@ -17,15 +17,15 @@ class SearchCityWeatherViewModel(private val repository: RequestRepository) : Vi
     val weather_error = MutableLiveData<Boolean>()
     val weather_loading = MutableLiveData<Boolean>()
 
-    fun refreshData(cityName: String) {
-        getDataFromAPI(cityName)
+    fun refreshData(cityName: String, units: String, APPID: String) {
+        getDataFromAPI(cityName, units, APPID)
     }
 
-    private fun getDataFromAPI(cityName: String) {
+    private fun getDataFromAPI(cityName: String, units: String, APPID: String) {
 
         weather_loading.value = true
         disposable.add(
-            repository.getDataService(cityName)
+            repository.getDataService(cityName, units, APPID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<WeatherResponse>() {
