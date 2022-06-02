@@ -4,4 +4,4 @@
 Kotlin is the langage used for this application with MVVM architecture.
 
 To use application : <br />
-       util package -> Constants.kt -> Place your OpenWeatherApi Key in APPID
+       <br /> util package -> Constants.kt -> Place your OpenWeatherApi Key in APPID
